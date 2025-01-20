@@ -100,7 +100,7 @@ const AnimatedTitle = () => {
           x: ["-100%", "0%", "100%"],
         }}
         transition={{
-          duration: 1,
+          duration: 9,
           repeat: Infinity,
           ease: "easeInOut",
         }}
