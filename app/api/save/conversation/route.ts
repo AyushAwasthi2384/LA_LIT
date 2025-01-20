@@ -3,10 +3,10 @@ import { UserConversation } from "@/models/models";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const { userId, text, sentiment, score } = req.body;
+        const { userId, text, sentiment, score }: any = req.body;
 
         try {
-            let userConversation = await UserConversation.findOne({ userId });
+            let userConversation: any = await UserConversation.findOne({ userId });
 
             if (!userConversation) {
                 userConversation = new UserConversation({ userId, messages: [] });
@@ -23,3 +23,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(405).json({ success: false, message: "Method not allowed" });
     }
 }
+

@@ -16,7 +16,7 @@ export default function About() {
         <h2 className="text-2xl font-semibold mb-4">Project Goals</h2>
         <p className="text-lg text-gray-700 mb-4">
           Our project aims to demonstrate the power of AI in sentiment analysis and
-          customer support. We've built a platform that combines advanced natural language
+          customer support. We&apos;ve built a platform that combines advanced natural language
           processing for sentiment analysis with an intelligent chatbot to provide efficient and
           insightful customer service solutions.
         </p>

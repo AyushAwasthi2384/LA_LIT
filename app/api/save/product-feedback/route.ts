@@ -3,10 +3,10 @@ import { ProductFeedback } from "@/models/models";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
-        const { userId, productName, feedback, sentiment, score } = req.body;
+        const { userId, productName, feedback, sentiment, score }: any = req.body;
 
         try {
-            const newFeedback = new ProductFeedback({
+            const newFeedback: any = new ProductFeedback({
                 userId,
                 productName,
                 feedback: { text: feedback, sentiment, score },
