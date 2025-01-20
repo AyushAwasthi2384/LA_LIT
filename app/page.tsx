@@ -16,7 +16,7 @@ import { Brain, MessageCircle, Zap, ArrowRight } from 'lucide-react';
 import CountUp from 'react-countup';
 
 const AnimatedTitle = () => {
-  const words = "Turn Conversations into Insights".split(" ");
+  const words = "Your Custom Support Vala Assistant".split(" ");
   
   const container = {
     hidden: { opacity: 0 },
@@ -51,20 +51,20 @@ const AnimatedTitle = () => {
 
   return (
     <motion.div
-      className="relative overflow-hidden h-[3rem] cursor-default"
+      className="relative overflow-hidden h-[8rem] pt-[2rem] cursor-default"
       initial="hidden"
       animate="visible"
       variants={container}
     >
-      <div className="flex h-[3rem] flex-wrap justify-center gap-x-4 gap-y-4 text-5xl md:text-6xl font-bold">
+      <div className="flex h-[10rem] flex-wrap justify-center gap-x-4 gap-y-4 text-5xl md:text-6xl font-bold">
         {words.map((word, idx) => (
           <motion.span
             key={idx}
             variants={child}
-            className="inline-block"
+            className="inline-block h-[10rem]"
           >
             <motion.span
-              className="h-[3rem] inline-block bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60"
+              className="h-[10rem] inline-block bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60"
               whileHover={{
                 scale: 1.1,
                 rotate: [-1, 1, -1, 1, 0],
@@ -94,13 +94,13 @@ const AnimatedTitle = () => {
         ))}
       </div>
       <motion.div
-        className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0"
+        className="absolute bottom-0 left-0 w-screen h-[1px] mb-[1rem] bg-gradient-to-r from-primary/0 via-primary to-primary/0"
         animate={{
-          scaleX: [0, 1, 0],
+          scaleX: [1, 0, 1],
           x: ["-100%", "0%", "100%"],
         }}
         transition={{
-          duration: 3,
+          duration: 1,
           repeat: Infinity,
           ease: "easeInOut",
         }}
