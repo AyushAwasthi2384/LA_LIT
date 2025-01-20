@@ -32,7 +32,7 @@ export default function AdminServicePage() {
     }, []);
 
     useEffect(() => {
-        console.log(sessions)
+        console.log(sessions) 
         if (service === 'session') {
             setData(sessions);
         } else if (service === 'analytics') {
