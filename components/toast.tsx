@@ -1,6 +1,6 @@
-import { Toast } from './use-toast'
+import { Toast as ToastType } from './ui/use-toast'
 
-export function Toast({ toast }: { toast: Toast | null }) {
+export function Toast({ toast }: { toast: ToastType | null }) {
   if (!toast) return null
 
   return (

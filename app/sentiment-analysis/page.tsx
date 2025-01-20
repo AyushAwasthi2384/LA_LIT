@@ -55,7 +55,7 @@ export default function SentimentAnalysis() {
             <CardTitle>Analysis Result</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>{result}</p>
+            <p>{`${result}`}</p>
             {/* <p>Confidence: {(result.confidence * 100).toFixed(2)}%</p> */}
           </CardContent>
         </Card>
