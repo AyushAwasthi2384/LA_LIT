@@ -4,35 +4,11 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default function SentimentAnalysis() {
   const [input, setInput] = useState('');
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<{ sentiment: string; confidence: number } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API || 'AIzaSyCDG0wArUJBQB5C8zcVRepFxUe6Vj0S5f8')
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
-
-  const analyzeSentimentWithGemini = async (text: string) => {
-    try {
-      const prompt = `Analyze the sentiment of the following text and provide the sentiment (Positive, Negative, Neutral) and confidence level(Structure like this: "Sentiment: Positive, Confidence: 0.95"): "${text}"`;
-      const response = await model.generateContent(prompt);
-
-      const responseText: any = response.response?.text || '';
-      // Assuming the response returns a structured text like "Sentiment: Positive, Confidence: 0.95"
-      const [sentimentPart, confidencePart] = responseText.split(',').map((item: any) => item.trim());
-
-      return {
-        sentiment: sentimentPart.replace('Sentiment:', '').trim(),
-        confidence: parseFloat(confidencePart.replace('Confidence:', '').trim()),
-      };
-    } catch (error) {
-      console.error('Error analyzing sentiment with Gemini API:', error);
-      throw new Error('Failed to analyze sentiment.');
-    }
-  };
 
   const analyzeSentiment = async () => {
     setIsLoading(true);
@@ -57,8 +33,6 @@ export default function SentimentAnalysis() {
       setIsLoading(false);
     }
   };
-
-
 
   return (
     <div className="container mx-auto px-4 py-12">

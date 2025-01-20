@@ -20,7 +20,7 @@ type ChatSession = {
 export default function AdminServicePage() {
     // const { service } = useParams();
     const service = 'session';
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<ChatSession[] | string | null>(null);
     const [sessions, setSessions] = useState<ChatSession[]>([]); 
 
     useEffect(() => {
@@ -87,12 +87,12 @@ export default function AdminServicePage() {
                 </div>
             )}
 
-            {service === 'analytics' && (
+            {/* {service === 'analytics' && (
                 <div>
                     <h2 className="text-xl mb-4">Analytics</h2>
                     <p>Analytics feature is under construction 🚧</p>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

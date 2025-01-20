@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## How to Run This Project
 
-## Getting Started
+Follow these steps to run the project on your local machine:
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Ensure you have **Node.js** (v16 or higher) and **npm** (or yarn) installed.  
+   You can download Node.js from [https://nodejs.org/](https://nodejs.org/).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. (Optional) If you prefer **yarn**, install it globally:  
+   ```bash
+   npm install -g yarn
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Steps to Run
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/ecommerce-chatbot.git
+   cd ecommerce-chatbot
+   ```
 
-## Learn More
+2. **Install Dependencies**
+   Install all required packages using either npm or yarn:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Set Up Environment Variables**
+   Create a `.env.local` file in the root directory and add your **Google Gemini API** key:
+   ```bash
+   GEMINI_API=your-google-gemini-api-key
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Run the Development Server**
+   Start the development server to view the project in your browser:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Open in Browser**
+   Once the server is running, open your browser and navigate to:
+   ```
+   http://localhost:3000
+   ```

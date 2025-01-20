@@ -1,24 +1,32 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { ProductFeedback } from "@/models/models";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === "POST") {
-        const { userId, productName, feedback, sentiment, score }: any = req.body;
+// Ensure dynamic route processing
+export const dynamic = "force-dynamic";
 
-        try {
-            const newFeedback: any = new ProductFeedback({
-                userId,
-                productName,
-                feedback: { text: feedback, sentiment, score },
-            });
+export async function POST(req: NextRequest): Promise<NextResponse> {
+    try {
+        const { userId, productName, feedback, sentiment, score } = await req.json();
 
-            await newFeedback.save();
+        // Create and save new feedback
+        const newFeedback = new ProductFeedback({
+            userId,
+            productName,
+            feedback: { text: feedback, sentiment, score },
+        });
 
-            res.status(200).json({ success: true, data: newFeedback });
-        } catch (error: any) {
-            res.status(500).json({ success: false, error: error.message });
-        }
-    } else {
-        res.status(405).json({ success: false, message: "Method not allowed" });
+        await newFeedback.save();
+
+        return NextResponse.json({ success: true, data: newFeedback }, { status: 200 });
+    } catch (error: unknown) {
+        return NextResponse.json(
+            { success: false, error: error instanceof Error ? error.message : "Unknown error" },
+            { status: 500 }
+        );
     }
+}
+
+export async function GET(req: NextRequest): Promise<NextResponse> {
+    console.log(req)
+    return NextResponse.json({ success: false, message: "GET method not implemented." }, { status: 405 });
 }

@@ -20,13 +20,7 @@ export default function About() {
           processing for sentiment analysis with an intelligent chatbot to provide efficient and
           insightful customer service solutions.
         </p>
-        {/* <h2 className="text-2xl font-semibold mb-4">Technology Stack</h2>
-        <ul className="list-disc list-inside text-lg text-gray-700 mb-4">
-          <li>Next.js for the frontend and API routes</li>
-          <li>React for building user interfaces</li>
-          <li>ShadCN UI for styled components</li>
-          <li>Gemini AI for natural language processing</li>
-        </ul> */}
+        
       </div>
       <h2 className="text-2xl font-semibold mb-6">Our Team</h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
