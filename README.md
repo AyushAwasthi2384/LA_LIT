@@ -1,6 +1,6 @@
-# E-Commerce Support Chatbot with Sentiment Analysis
+# Customizable Support Chatbot with Sentiment Analysis
 
-This project is a smart e-commerce support chatbot built with **Next.js**, **Google Gemini API**, and **ShadCN UI components**. The chatbot provides real-time assistance to users, analyzes their sentiments, and stores all conversation data in the browser's `localStorage`. It also collects user feedback and saves it for future insights.
+This project is a smart e-commerce support chatbot built with **Next.js**, **Google Gemini API**, and **ShadCN UI components**. The chatbot provides real-time assistance to users, analyzes their sentiments, and stores all conversation data in the browser's `localStorage`. It also collects user feedback and saves it for future insights. For now I have taken a usecase as if it is a support assistant for an e-commerce store of shoes named [Snikre](https://www.snikre.com)(which is my brand itself).
 
 ## Features
 
@@ -122,4 +122,5 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ---
 
-## Developed by [Ayush Awasthi🚀](https://www.github.com/AyushAwasthi2384) and team
+## Developed by [Ayush Awasthi🚀](https://www.github.com/AyushAwasthi2384) and team!
+(in half an hour😉)

@@ -8,7 +8,7 @@ import { ToastProvider } from '@radix-ui/react-toast'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Hackathon Project',
+  title: 'LA_LIT | Your Custom Support Vala',
   description: 'Sentiment Analysis and Chatbot Project',
 }
 
