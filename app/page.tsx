@@ -118,7 +118,7 @@ const fadeIn = {
 const stats = [
   { value: 99, label: "Accuracy", suffix: "%" },
   { value: 24, label: "Support", suffix: "/7" },
-  { value: 50000, label: "Users", suffix: "+" }
+  { value: 50000, label: "Potential Users", suffix: "+" }
 ];
 
 export default function Home() {
