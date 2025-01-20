@@ -16,8 +16,8 @@ Follow these steps to run the project on your local machine:
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/ecommerce-chatbot.git
-   cd ecommerce-chatbot
+   git clone https://github.com/AyushAwasthi2384/Support-System-Chatbot
+   cd Support-System-Chatbot
    ```
 
 2. **Install Dependencies**
