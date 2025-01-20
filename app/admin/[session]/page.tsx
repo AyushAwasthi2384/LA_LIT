@@ -22,7 +22,7 @@ export default function AdminServicePage() {
     // const { service } = useParams();
     const service = 'session';
     const [data, setData] = useState<any>(null);
-    const [sessions, setSessions] = useState<ChatSession[]>([]);
+    const [sessions, setSessions] = useState<ChatSession[]>([]); 
 
     useEffect(() => {
         // Simulate fetching localStorage or API data
