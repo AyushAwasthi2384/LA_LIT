@@ -98,7 +98,7 @@ const AnimatedTitle = () => {
         animate={{
           scaleX: [1, 0, 1],
           x: ["-100%", "0%", "100%"],
-        }}
+        }} 
         transition={{
           duration: 9,
           repeat: Infinity,
