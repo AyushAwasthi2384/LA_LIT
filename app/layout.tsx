@@ -26,7 +26,6 @@ export default function RootLayout({
             <main className="flex-grow">{children}</main>
             {/* <Footer /> */}
           </div>
-          {/* Toasts will automatically work via the ToastProvider */}
         </body>
       </ToastProvider>
     </html>
