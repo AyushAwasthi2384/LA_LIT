@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { Hubballi } from 'next/font/google'
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-dark shadow-sm">
       <nav className="mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           LA_LIT

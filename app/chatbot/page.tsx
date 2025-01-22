@@ -158,7 +158,7 @@ export default function Chatbot() {
                 className={`mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}
               >
                 <span
-                  className={`inline-block max-w-[60rem] py-2 px-4 rounded-lg ${message.role === 'user' ? 'bg-black text-white' : 'bg-gray-200 text-gray-800'
+                  className={`inline-block max-w-[60rem] py-2 px-4 rounded-lg ${message.role === 'user' ? 'bg-gray-500 text-white' : 'bg-gray-900 text-gray-100'
                     }`}
                 >
                   <ReactMarkdown>{message.text}</ReactMarkdown>
