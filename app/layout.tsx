@@ -1,6 +1,7 @@
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from "@vercel/analytics/react"
 import './globals.css'
 import Header from '../components/Header'
 import { ToastProvider } from '@radix-ui/react-toast'
@@ -26,6 +27,7 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Header />
             <DisableInspect />
+            <Analytics />
             <main className="flex-grow">{children}</main>
             {/* <Footer /> */}
           </div>
