@@ -4,7 +4,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa'
 const teamMembers = [
   { name: 'Ayush Awasthi', role: 'Team Leader and AI Developer', github: 'https://www.github.com/AyushAwasthi2384', linkedin: 'https://www.linkedin.com/in/ayush2384' },
   { name: 'Ayush Gauniyal', role: 'Full Stack Developer', github: 'https://www.github.com/agpersonal6104', linkedin: 'https://www.linkedin.com/in/ayush-gauniyal-15ba7b2b3/' },
-  { name: 'Avichal Saxena', role: 'AI Developer and Project Planner', github: '#', linkedin: 'https://www.linkedin.com/in/avichal-saxena-709396331/' },
+  { name: 'Avichal Saxena', role: 'AI Developer and Project Planner', github: 'https://www.github.com/avichal077', linkedin: 'https://www.linkedin.com/in/avichal-saxena-709396331/' },
   { name: 'Amay Mishra', role: 'UI/UX Designer and Frontend Developer', github: 'https://www.github.com/crucie', linkedin: 'https://www.linkedin.com/in/kshimate/' }
 ]
 
