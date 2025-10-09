@@ -50,7 +50,7 @@ export default function Chatbot() {
   const [currentSession, setCurrentSession] = useState<ChatSession>(() => createNewSession())
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API || '')
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API || '')
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
   const saveToLocalStorage = (sessions: ChatSession[]) => {
