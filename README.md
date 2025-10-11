@@ -30,12 +30,40 @@ This project is a smart e-commerce support chatbot built with **Next.js**, **Goo
    ```
 
 3. **Set Up Environment Variables**
-   Create a `.env` file in the root of your project and add your Google Gemini API key:
+   Create a `.env.local` file in the root of your project and add the following:
    ```bash
+   # Google Gemini API key
    GEMINI_API=your-google-gemini-api-key
+   
+   # Google Authentication credentials
+   GOOGLE_CLIENT_ID=your-google-client-id
+   GOOGLE_CLIENT_SECRET=your-google-client-secret
+   NEXTAUTH_URL=http://localhost:3000
+   NEXTAUTH_SECRET=your-nextauth-secret
    ```
 
-4. **Run the Application**
+4. **Set Up Google Authentication**
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select an existing one
+   - Navigate to "APIs & Services" > "Credentials"
+   - Click "Create Credentials" > "OAuth client ID"
+   - Select "Web application" as the application type
+   - Add a name for your OAuth client
+   - Add authorized JavaScript origins: `http://localhost:3000`
+   - Add authorized redirect URIs:
+     - `http://localhost:3000/api/auth/callback/google`
+     - `http://localhost:3000/auth/signin`
+   - Click "Create" and note your Client ID and Client Secret
+   - Add these credentials to your `.env.local` file
+
+5. **Generate NextAuth Secret**
+   Generate a secure random string for NEXTAUTH_SECRET:
+   ```bash
+   openssl rand -base64 32
+   ```
+   Add this to your `.env.local` file.
+
+6. **Run the Application**
    Start the development server:
    ```bash
    npm run dev
@@ -43,7 +71,7 @@ This project is a smart e-commerce support chatbot built with **Next.js**, **Goo
    yarn dev
    ```
 
-5. **Open in Browser**
+7. **Open in Browser**
    Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
 
 ---
