@@ -6,14 +6,10 @@ import ReactMarkdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import Sentiment from 'sentiment'
-import { GoogleGenerativeAI } from "@google/generative-ai"
 
 type Message = {
-  role: 'user' | 'model'
-  text: string
-  sentiment?: string
-  score?: number
+  role: 'user' | 'assistant' | 'system'
+  content: string
   timestamp?: string
 }
 
@@ -34,12 +30,12 @@ export default function Chatbot() {
       time: now.toTimeString().slice(0, 5),
       messages: [
         {
-          role: 'user',
-          text: "Your name is Lalit. You are a support assistant at an e-commerce platform called Snikre, a company specializing in premium brand shoes. Snikre is the ultimate destination for luxury footwear, offering a curated collection for Gen Z with exclusive collaborations and the latest drops from top-tier brands. You can explore the frontpage collection here: https://www.snikre.com/collections/frontpage. Snikre is committed to making luxury accessible with competitive pricing on premium sneakers, boots, and more: https://www.snikre.com. The platform ensures a seamless shopping experience with secure checkouts, reliable shipping, and a 7-day return policy: https://www.snikre.com/pages/return-and-refund. Our diverse range of products includes high-performance running shoes, which you can browse here: https://www.snikre.com/collections/running-shoes. Thank you for assisting customers with their needs and helping them discover Snikre’s exceptional offerings! (if you don't have relevant links to provide, give this https://snikre.com). firstly ask the language to continue and next ask about the product. Respond in nice MD format"
+          role: 'system',
+          content: "Your name is Lalit. You are a support assistant at an e-commerce platform called Snikre, a company specializing in premium brand shoes. Snikre is the ultimate destination for luxury footwear, offering a curated collection for Gen Z with exclusive collaborations and the latest drops from top-tier brands. You can explore the frontpage collection here: https://www.snikre.com/collections/frontpage. Snikre is committed to making luxury accessible with competitive pricing on premium sneakers, boots, and more: https://www.snikre.com. The platform ensures a seamless shopping experience with secure checkouts, reliable shipping, and a 7-day return policy: https://www.snikre.com/pages/return-and-refund. Our diverse range of products includes high-performance running shoes, which you can browse here: https://www.snikre.com/collections/running-shoes. Thank you for assisting customers with their needs and helping them discover Snikre's exceptional offerings! (if you don't have relevant links to provide, give this https://snikre.com). firstly ask the language to continue and next ask about the product. Respond in nice MD format"
         },
         {
-          role: 'model',
-          text: '**Hey!** How can I help you today?',
+          role: 'assistant',
+          content: '**Hey!** How can I help you today?',
         },
       ],
     }
@@ -49,9 +45,6 @@ export default function Chatbot() {
   const [isLoading, setIsLoading] = useState(false)
   const [currentSession, setCurrentSession] = useState<ChatSession>(() => createNewSession())
   const messagesEndRef = useRef<HTMLDivElement>(null)
-
-  const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API || '')
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
   const saveToLocalStorage = (sessions: ChatSession[]) => {
     localStorage.setItem('chatHistories', JSON.stringify(sessions))
@@ -68,47 +61,14 @@ export default function Chatbot() {
     saveToLocalStorage(allSessions)
   }
 
-  const sendMessageToGemini = async (message: string) => {
-    try {
-      const chat = model.startChat({
-        history: currentSession.messages.map((msg) => ({
-          role: msg.role,
-          parts: [{ text: msg.text }],
-        })),
-      })
-
-      const response = await chat.sendMessageStream(message)
-      let responseText = ''
-
-      for await (const chunk of response.stream) {
-        responseText += chunk.text()
-      }
-
-      return responseText
-    } catch (error) {
-      console.error('Error interacting with Gemini API:', error)
-      throw new Error('Failed to get response from Gemini API.')
-    }
-  }
-
-  const analyzeSentiment = (text: string) => {
-    const sentiment = new Sentiment()
-    const result = sentiment.analyze(text)
-    const sentimentLabel = result.score > 0 ? 'positive' : result.score < 0 ? 'negative' : 'neutral'
-    return { sentiment: sentimentLabel, score: result.score }
-  }
-
   const sendMessage = async () => {
     if (!input.trim()) return
 
     const userMessage: Message = {
       role: 'user',
-      text: input,
+      content: input,
       timestamp: new Date().toISOString(),
     }
-    const sentimentData = analyzeSentiment(input)
-    userMessage.sentiment = sentimentData.sentiment
-    userMessage.score = sentimentData.score
 
     const updatedMessages = [...currentSession.messages, userMessage]
     setCurrentSession((prev) => ({ ...prev, messages: updatedMessages }))
@@ -117,19 +77,35 @@ export default function Chatbot() {
     setIsLoading(true)
 
     try {
-      const botResponse = await sendMessageToGemini(input)
+      // Filter out system messages for display but include them in API call
+      const apiMessages = updatedMessages.map(msg => ({
+        role: msg.role,
+        content: msg.content
+      }));
 
-      const botMessage: Message = {
-        role: 'model',
-        text: botResponse,
-        timestamp: new Date().toISOString(),
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        const botMessage: Message = {
+          role: 'assistant',
+          content: data.result,
+          timestamp: new Date().toISOString(),
+        }
+
+        setCurrentSession((prev) => {
+          const updated = { ...prev, messages: [...prev.messages, botMessage] }
+          updateSessionHistory(updated)
+          return updated
+        })
+      } else {
+        console.error('API Error:', data.error);
       }
-
-      setCurrentSession((prev) => {
-        const updated = { ...prev, messages: [...prev.messages, botMessage] }
-        updateSessionHistory(updated)
-        return updated
-      })
     } catch (error) {
       console.error('Error sending message:', error)
     } finally {
@@ -146,30 +122,33 @@ export default function Chatbot() {
     }
   }, [currentSession])
 
+  useEffect(() => {
+    // Scroll to bottom when messages change
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [currentSession.messages])
+
   return (
     <div className="h-[80vh] mx-auto max-w-7xl px-4 py-4">
       <h1 className="text-2xl font-bold mb-4">Chat with Lalit</h1>
       <Card className="mb-4 h-full">
         <CardContent>
           <div className="h-[76vh] pt-6 overflow-y-auto">
-            {currentSession.messages.slice(1).map((message, index) => (
-              <div
-                key={index}
-                className={`mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}
-              >
-                <span
-                  className={`inline-block max-w-[60rem] py-2 px-4 rounded-lg ${message.role === 'user' ? 'bg-black text-white' : 'bg-gray-200 text-gray-800'
-                    }`}
+            {currentSession.messages
+              .filter(message => message.role !== 'system') // Don't display system messages
+              .map((message, index) => (
+                <div
+                  key={index}
+                  className={`mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}
                 >
-                  <ReactMarkdown>{message.text}</ReactMarkdown>
-                  {/* {message.role === 'user' && (
-                    <span className="block text-sm mt-1 text-gray-500">
-                      Sentiment: {message.sentiment} (Score: {message.score})
-                    </span>
-                  )} */}
-                </span>
-              </div>
-            ))}
+                  <span
+                    className={`inline-block max-w-[60rem] py-2 px-4 rounded-lg ${
+                      message.role === 'user' ? 'bg-black text-white' : 'bg-gray-200 text-gray-800'
+                    }`}
+                  >
+                    <ReactMarkdown>{message.content}</ReactMarkdown>
+                  </span>
+                </div>
+              ))}
             <div ref={messagesEndRef} />
           </div>
         </CardContent>

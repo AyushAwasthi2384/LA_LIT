@@ -7,10 +7,12 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 export default function SentimentAnalysis() {
   const [input, setInput] = useState('');
-  const [result, setResult] = useState<{ sentiment: string; confidence: number } | null>(null);
+  const [result, setResult] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const analyzeSentiment = async () => {
+    if (!input.trim()) return;
+    
     setIsLoading(true);
     try {
       const response = await fetch('/api/sentiment', {
@@ -55,8 +57,7 @@ export default function SentimentAnalysis() {
             <CardTitle>Analysis Result</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>{`${result}`}</p>
-            {/* <p>Confidence: {(result.confidence * 100).toFixed(2)}%</p> */}
+            <p className="text-lg">{result}</p>
           </CardContent>
         </Card>
       )}
