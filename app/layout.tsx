@@ -6,6 +6,7 @@ import './globals.css'
 import Header from '../components/Header'
 import { ToastProvider } from '@radix-ui/react-toast'
 import DisableInspect from '@/components/DisableInspect'
+import { Providers } from './providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,13 +25,15 @@ export default function RootLayout({
     <html lang="en">
       <ToastProvider>
         <body className={inter.className}>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <DisableInspect />
-            <Analytics />
-            <main className="flex-grow">{children}</main>
-            {/* <Footer /> */}
-          </div>
+          <Providers>
+            <div className="flex flex-col min-h-screen">
+              <Header />
+              <DisableInspect />
+              <Analytics />
+              <main className="flex-grow">{children}</main>
+              {/* <Footer /> */}
+            </div>
+          </Providers>
         </body>
       </ToastProvider>
     </html>
