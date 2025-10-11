@@ -55,6 +55,43 @@ export default {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			animation: {
+				'gradient-shift': 'gradientShift 15s ease infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-slow': 'pulse 2s ease-in-out infinite',
+				'slide-in-up': 'slideInUp 0.8s ease-out',
+				'fade-in': 'fadeIn 1s ease-out',
+				'scale-in': 'scaleIn 0.6s ease-out',
+			},
+			keyframes: {
+				gradientShift: {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' },
+				},
+				float: {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+				slideInUp: {
+					'from': { opacity: '0', transform: 'translateY(30px)' },
+					'to': { opacity: '1', transform: 'translateY(0)' },
+				},
+				fadeIn: {
+					'from': { opacity: '0' },
+					'to': { opacity: '1' },
+				},
+				scaleIn: {
+					'from': { opacity: '0', transform: 'scale(0.9)' },
+					'to': { opacity: '1', transform: 'scale(1)' },
+				},
+			},
+			backdropBlur: {
+				xs: '2px',
+			},
+			boxShadow: {
+				'3xl': '0 35px 60px -12px rgba(0, 0, 0, 0.25)',
 			}
 		}
 	},

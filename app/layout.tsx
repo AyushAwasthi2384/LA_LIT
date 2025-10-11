@@ -28,7 +28,7 @@ export default function RootLayout({
             <Header />
             <DisableInspect />
             <Analytics />
-            <main className="flex-grow">{children}</main>
+            <main className="flex-grow pt-20">{children}</main>
             {/* <Footer /> */}
           </div>
         </body>

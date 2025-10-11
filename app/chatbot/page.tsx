@@ -2,10 +2,12 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import ReactMarkdown from 'react-markdown'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
+import { Bot, Send, Loader2, MessageCircle, User, Sparkles } from 'lucide-react'
 import Sentiment from 'sentiment'
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
@@ -147,44 +149,189 @@ export default function Chatbot() {
   }, [currentSession])
 
   return (
-    <div className="h-[80vh] mx-auto max-w-7xl px-4 py-4">
-      <h1 className="text-2xl font-bold mb-4">Chat with Lalit</h1>
-      <Card className="mb-4 h-full">
-        <CardContent>
-          <div className="h-[76vh] pt-6 overflow-y-auto">
-            {currentSession.messages.slice(1).map((message, index) => (
-              <div
-                key={index}
-                className={`mb-2 ${message.role === 'user' ? 'text-right' : 'text-left'}`}
-              >
-                <span
-                  className={`inline-block max-w-[60rem] py-2 px-4 rounded-lg ${message.role === 'user' ? 'bg-black text-white' : 'bg-gray-200 text-gray-800'
-                    }`}
-                >
-                  <ReactMarkdown>{message.text}</ReactMarkdown>
-                  {/* {message.role === 'user' && (
-                    <span className="block text-sm mt-1 text-gray-500">
-                      Sentiment: {message.sentiment} (Score: {message.score})
-                    </span>
-                  )} */}
-                </span>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-pink-900/20"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12 relative z-10">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="flex justify-center mb-6">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
+              <Bot className="w-10 h-10 text-white" />
+            </div>
           </div>
-        </CardContent>
-      </Card>
-      <div className="flex space-x-2">
-        <Input
-          type="text"
-          placeholder="Type your message..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-        />
-        <Button onClick={sendMessage} disabled={isLoading}>
-          {isLoading ? 'Sending...' : 'Send'}
-        </Button>
+          <h1 className="text-5xl font-bold gradient-text mb-4">Chat with Lalit</h1>
+          <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            Your AI-powered support assistant for Snikre's premium footwear collection
+          </p>
+        </motion.div>
+
+        {/* Chat Interface */}
+        <div className="max-w-4xl mx-auto">
+          <Card className="glass border-white/20 hover:border-white/40 transition-all duration-300 h-[70vh] flex flex-col">
+            <CardContent className="flex-1 flex flex-col p-0">
+              {/* Messages Area */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                <AnimatePresence>
+                  {currentSession.messages.slice(1).map((message, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
+                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div className={`flex items-start space-x-3 max-w-[80%] ${message.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
+                        {/* Avatar */}
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                          message.role === 'user' 
+                            ? 'bg-gradient-to-r from-purple-500 to-blue-500' 
+                            : 'bg-gradient-to-r from-blue-500 to-cyan-500'
+                        }`}>
+                          {message.role === 'user' ? (
+                            <User className="w-4 h-4 text-white" />
+                          ) : (
+                            <Bot className="w-4 h-4 text-white" />
+                          )}
+                        </div>
+                        
+                        {/* Message Bubble */}
+                        <div className={`px-4 py-3 rounded-2xl ${
+                          message.role === 'user'
+                            ? 'bg-gradient-to-r from-purple-500 to-blue-500 text-white'
+                            : 'bg-white/10 backdrop-blur-sm text-white border border-white/20'
+                        }`}>
+                          <div className="prose prose-invert max-w-none">
+                            <ReactMarkdown className="text-sm leading-relaxed">
+                              {message.text}
+                            </ReactMarkdown>
+                          </div>
+                          {message.role === 'user' && message.sentiment && (
+                            <div className="text-xs mt-2 opacity-70">
+                              Sentiment: {message.sentiment} ({message.score})
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+                
+                {/* Loading Indicator */}
+                {isLoading && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex justify-start"
+                  >
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center">
+                        <Bot className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="bg-white/10 backdrop-blur-sm text-white border border-white/20 px-4 py-3 rounded-2xl">
+                        <div className="flex items-center space-x-2">
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span className="text-sm">Lalit is typing...</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Input Area */}
+              <div className="p-6 border-t border-white/20">
+                <div className="flex space-x-3">
+                  <div className="flex-1">
+                    <Input
+                      type="text"
+                      placeholder="Type your message to Lalit..."
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                      className="input"
+                      disabled={isLoading}
+                    />
+                  </div>
+                  <Button 
+                    onClick={sendMessage} 
+                    disabled={isLoading || !input.trim()}
+                    className="btn-primary group"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Features */}
+          <motion.div
+            className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            {[
+              {
+                title: "24/7 Support",
+                description: "Always available to help with your queries",
+                icon: MessageCircle,
+                color: "from-purple-500 to-pink-500"
+              },
+              {
+                title: "Smart Responses",
+                description: "AI-powered intelligent responses",
+                icon: Bot,
+                color: "from-blue-500 to-cyan-500"
+              },
+              {
+                title: "Sentiment Analysis",
+                description: "Understands the tone of your messages",
+                icon: Sparkles,
+                color: "from-green-500 to-emerald-500"
+              }
+            ].map((feature, index) => {
+              const Icon = feature.icon
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 + index * 0.1, duration: 0.8 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <Card className="glass hover:shadow-2xl transition-all duration-300 group">
+                    <CardContent className="p-6 text-center">
+                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                      <p className="text-white/70">{feature.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </motion.div>
+        </div>
       </div>
     </div>
   )

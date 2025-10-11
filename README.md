@@ -98,7 +98,49 @@ This project is a smart e-commerce support chatbot built with **Next.js**, **Goo
 
 ---
 
+## Design Features
+
+The application features a modern, aesthetically pleasing design with the following elements:
+
+### 🎨 Complete Design Transformation
+
+1. **Global CSS Overhaul**
+   - **Animated Gradient Background**: Beautiful blue-indigo gradient that shifts smoothly
+   - **Glass Morphism Effects**: Modern glass-like cards with backdrop blur
+   - **Custom Animations**: Floating, pulse, slide-in, fade-in, and scale animations
+   - **Enhanced Typography**: Improved font loading and text styling
+   - **Custom Scrollbar**: Styled scrollbars to match the theme
+
+2. **Enhanced Header with Mobile Menu**
+   - **Fixed Navigation**: Header stays at the top with smooth scroll effects
+   - **Hamburger Menu**: Fully responsive mobile menu with smooth animations
+   - **Glass Effect**: Transparent header that becomes more opaque on scroll
+   - **Icon Integration**: Beautiful icons for each navigation item
+   - **Smooth Transitions**: All interactions have smooth hover and click effects
+
+3. **Redesigned Pages**
+   - **Home Page**: Animated hero section, floating background elements, enhanced stats cards
+   - **Sentiment Analysis Page**: Modern interface with glass morphism and real-time feedback
+   - **Chatbot Page**: Modern chat interface with animated messages and loading states
+   - **About Page**: Team showcase with beautiful cards and project goals presentation
+
+4. **Color Scheme**
+   - **Primary**: Blue-indigo gradients
+   - **Secondary**: White with transparency
+   - **Background**: Animated blue-indigo gradient
+   - **Text**: High-contrast white and light gray for readability
+
+---
+
 ## Contributing
+
+Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to contribute to this project, including:
+- How to submit issues
+- How to create pull requests
+- Coding standards
+- Development workflow
+
+---
 
 We welcome contributions to improve this project! To contribute:
 1. Fork this repository.
