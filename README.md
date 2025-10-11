@@ -1,10 +1,10 @@
 # Customizable Support Chatbot with Sentiment Analysis
 
-This project is a smart e-commerce support chatbot built with **Next.js**, **Google Gemini API**, and **ShadCN UI components**. The chatbot provides real-time assistance to users, analyzes their sentiments, and stores all conversation data in the browser's `localStorage`. It also collects user feedback and saves it for future insights. For now I have taken a usecase as if it is a support assistant for an e-commerce store of shoes named [Snikre](https://www.snikre.com)(which is my brand itself).
+This project is a smart e-commerce support chatbot built with **Next.js**, **Groq Llama 70B API**, and **ShadCN UI components**. The chatbot provides real-time assistance to users, analyzes their sentiments, and stores all conversation data in the browser's `localStorage`. It also collects user feedback and saves it for future insights. For now I have taken a usecase as if it is a support assistant for an e-commerce store of shoes named [Snikre](https://www.snikre.com)(which is my brand itself).
 
 ## Features
 
-- **AI-Powered Chatbot**: Powered by the Google Gemini API to provide intelligent responses.
+- **AI-Powered Chatbot**: Powered by the Groq Llama 70B API to provide intelligent responses.
 - **Sentiment Analysis**: Analyzes the sentiment of user messages (positive, neutral, or negative).
 - **Local Data Storage**: Stores conversation history and sentiment data in `localStorage` for persistence.
 - **Feedback Collection**: Collects user feedback on products for sentiment tracking and insights.
@@ -30,10 +30,12 @@ This project is a smart e-commerce support chatbot built with **Next.js**, **Goo
    ```
 
 3. **Set Up Environment Variables**
-   Create a `.env` file in the root of your project and add your Google Gemini API key:
+   Create a `.env` file in the root of your project and add your Groq API key:
    ```bash
-   GEMINI_API=your-google-gemini-api-key
+   GROQ_API_KEY=your-groq-api-key
    ```
+   
+   Note: Your Groq API key should start with `gsk_` and can be obtained from the [Groq Console](https://console.groq.com/).
 
 4. **Run the Application**
    Start the development server:
