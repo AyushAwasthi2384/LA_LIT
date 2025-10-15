@@ -26,7 +26,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <DisableInspect />
+            {/* <DisableInspect /> */}
             <Analytics />
             <main className="flex-grow">{children}</main>
             {/* <Footer /> */}
